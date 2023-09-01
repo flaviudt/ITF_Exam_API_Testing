@@ -10,7 +10,7 @@ class TestUsersRequests(unittest.TestCase):
     def test_get_all_users(self):
         """
         Verificari:
-        - status code este 200
+        - status code = 200
         - in raspunsul json, am primit exact 30 de useri
         - cheia total are valoarea 100
         - cheia limit are valoarea 30

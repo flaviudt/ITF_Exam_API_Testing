@@ -53,6 +53,18 @@ class TestCommentsRequests(unittest.TestCase):
         for key in keys_list:
             self.assertIn(key, response_msg)
 
+    def test_get_comment_by_id_when_id_is_not_in_db(self):
+        """
+        Verificari:
+        - status code = 404
+        - message = Comment with id '4000' not found
+        """
+        comment_id = 4000
+        response = self.comments_req.get_comment_by_id(comment_id=comment_id)
+        response_msg = response.json()
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(response_msg["message"], f"Comment with id '{comment_id}' not found")
+
     def test_get_all_comments_by_post_id(self):
         """
         Verificari:

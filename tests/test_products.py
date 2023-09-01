@@ -36,7 +36,7 @@ class TestProductsRequests(unittest.TestCase):
     def test_get_products_when_limit_is_set(self):
         """
         Verificari:
-        - status code este 200
+        - status code = 200
         - in raspunsul json, am primit exact <limit> de produse
         - cheia limit are valoarea <limit>
         """
@@ -50,7 +50,7 @@ class TestProductsRequests(unittest.TestCase):
     def test_get_products_when_skip_is_set(self):
         """
         Verificari:
-        - status code este 200
+        - status code = 200
         - in raspunsul json, verificam ca id-ul primului produs
         este <skip + 1>
         - cheia skip are valoarea <skip>
@@ -66,7 +66,7 @@ class TestProductsRequests(unittest.TestCase):
     def test_get_products_when_skip_is_greater_than_total_number_of_products(self):
         """
         Verificari:
-        - status code este 200
+        - status code = 200
         - in raspunsul json, avem cheia products, dar valoarea acesteia, este o lista goala.
         - cheia skip are valoarea <skip>
         """
@@ -80,7 +80,7 @@ class TestProductsRequests(unittest.TestCase):
     def test_get_products_when_skip_has_invalid_format(self):
         """
         Verificari:
-        - status code este 400
+        - status code = 400
         - verificam ca mesajul primit in response este cel asteptat
         """
         skip = "invalid"
@@ -92,22 +92,23 @@ class TestProductsRequests(unittest.TestCase):
     def test_get_product_by_id_when_id_is_in_db(self):
         """
         Verificari:
-        - status code este 200
+        - status code = 200
         - in raspuns, ca pentru cheia id, avem aceeasi valoare, ca cea trimisa in request
         - verificam ca avem cheile: title, price, description, category,stock in response
         """
-        response = self.products_req.get_product_by_id(4)
+        product_id = 4
+        response = self.products_req.get_product_by_id(product_id=product_id)
         response_msg = response.json()
         keys_list = ["title", "price", "description", "category", "stock"]
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response_msg["id"], 4)
+        self.assertEqual(response_msg["id"], product_id)
         for key in keys_list:
             self.assertIn(key, response_msg)
 
     def test_get_product_by_id_when_id_is_not_in_db(self):
         """
         Verificari:
-        - status code este 404
+        - status code = 404
         - in raspuns, verificam mesajul
         """
         product_id = 110
@@ -119,7 +120,7 @@ class TestProductsRequests(unittest.TestCase):
     def test_search_product_when_products_found_by_criteria(self):
         """
         Verificari:
-        - status code 200
+        - status code =  200
         - verificam ca lista products NU este goala
         - total > 0
         - limit > 0
@@ -135,7 +136,7 @@ class TestProductsRequests(unittest.TestCase):
     def test_search_product_when_products_not_found_by_criteria(self):
         """
         Verificari:
-        - status code 200
+        - status code = 200
         - verificam ca lista products este goala
         - total este egal cu 0
         - limit este egal cu 0
